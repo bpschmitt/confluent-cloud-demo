@@ -12,17 +12,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        envs: [ENVONE, ENVTWO]
-        dockerfiles: [consumer, producer]
+        versions: [major, minor]
         include:
-          - envs: ENVONE
-            MAJOR: ${{ secrets.MAJOR }}
-          - envs: ENVTWO
-            MINOR: ${{ secrets.MINOR }}
+          - versions: major
+            major_secret: MAJOR
+          - versions: major
+            minor_secret: MINOR
           - dockerfile: ./app/consumer_Dockerfile
-            image: bpschmitt/python-consumer:${{ matrix.ENVONE }}.${{ matrix.ENVTWO }}
+            image: bpschmitt/python-consumer:${{ secrets[matrix.major_secret] }}.${{ secrets[matrix.minor_secret] }}
           - dockerfile: ./app/producer_Dockerfile
-            image: bpschmitt/python-producer:${{ matrix.ENVONE }}.${{ matrix.ENVTWO }}
+            image: bpschmitt/python-producer:${{ secrets[matrix.major_secret] }}.${{ secrets[matrix.minor_secret] }}
     permissions:
       contents: read
       packages: write
