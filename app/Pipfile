@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 confluent-kafka = "*"
+lorem = "*"
 
 [dev-packages]
 
