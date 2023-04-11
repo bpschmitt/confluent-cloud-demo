@@ -13,6 +13,6 @@ RUN pip install pipenv && \
   apt-get autoremove -y && \
   pip uninstall pipenv -y
 
-COPY consumer.py ./
+COPY ./consumer.py ./
 
 CMD ["python", "consumer.py"]

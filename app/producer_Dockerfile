@@ -13,6 +13,6 @@ RUN pip install pipenv && \
   apt-get autoremove -y && \
   pip uninstall pipenv -y
 
-COPY producer.py ./
+COPY ./producer.py ./
 
 CMD ["python", "producer.py"]
