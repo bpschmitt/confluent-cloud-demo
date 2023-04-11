@@ -31,7 +31,7 @@ jobs:
         context: .
         file: ./app/consumer_Dockerfile
         push: true
-        image: bpschmitt/python-consumer:${{ secrets.MAJOR }}.${{ secrets.MINOR }}
+        tags: bpschmitt/python-consumer:${{ secrets.MAJOR }}.${{ secrets.MINOR }}
 
     - name: Build and push producer Docker images
       uses: docker/build-push-action@v4
@@ -39,7 +39,7 @@ jobs:
         context: .
         file: ./app/producer_Dockerfile
         push: true
-        image: bpschmitt/python-producer:${{ secrets.MAJOR }}.${{ secrets.MINOR }}
+        tags: bpschmitt/python-producer:${{ secrets.MAJOR }}.${{ secrets.MINOR }}
 
 
     - name: Update Minor version
