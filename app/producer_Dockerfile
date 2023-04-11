@@ -3,7 +3,7 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # both files are explicitly required!
-COPY Pipfile Pipfile.lock ./
+COPY ./app/Pipfile ./app/Pipfile.lock ./
 
 RUN pip install pipenv && \
   apt-get update && \
