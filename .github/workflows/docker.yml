@@ -11,17 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        versions: [major, minor]
-        include:
-          - versions: major
-            major_secret: MAJOR
-          - versions: major
-            minor_secret: MINOR
-          - dockerfile: ./app/consumer_Dockerfile
-            image: bpschmitt/python-consumer:${{ secrets[matrix.major_secret] }}.${{ secrets[matrix.minor_secret] }}
-          - dockerfile: ./app/producer_Dockerfile
-            image: bpschmitt/python-producer:${{ secrets[matrix.major_secret] }}.${{ secrets[matrix.minor_secret] }}
     permissions:
       contents: read
       packages: write
@@ -36,12 +25,21 @@ jobs:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Build and push Docker images
+    - name: Build and push consumer Docker images
       uses: docker/build-push-action@v4
       with:
         context: .
-        file: ${{ matrix.dockerfile }}
+        file: ./app/consumer_Dockerfile
         push: true
+        tags: bpschmitt/python-consumer:${{ secrets.MAJOR }}.${{ secrets.MINOR }}
+
+    - name: Build and push producer Docker images
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        file: ./app/producer_Dockerfile
+        push: true
+        tags: bpschmitt/python-producer:${{ secrets.MAJOR }}.${{ secrets.MINOR }}
 
     - name: Update Minor version
       uses: hmanzur/actions-set-secret@v2.0.0
