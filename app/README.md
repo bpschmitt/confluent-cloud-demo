@@ -1,5 +1,7 @@
 # Producer / Consumer Demo Apps
 
+Local testing instructions.
+
 ```
 export CONFLUENT_BOOTSTRAP_SERVER = <your bootstrap server>
 export CONFLUENT_API_KEY = <your api key>
