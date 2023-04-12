@@ -15,6 +15,7 @@ spec:
       containers:
         - name: nr-confluent-producer
           image: bpschmitt/python-producer:latest
+          imagePullPolicy: Always
           args:
             - producer.py
           env:

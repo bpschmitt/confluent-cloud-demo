@@ -15,4 +15,4 @@ RUN pip install pipenv && \
 
 COPY ./app/consumer.py ./
 
-CMD ["python", "consumer.py"]
+CMD ["python", "/app/consumer.py"]

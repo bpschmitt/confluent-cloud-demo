@@ -15,4 +15,4 @@ RUN pip install pipenv && \
 
 COPY ./app/producer.py ./
 
-CMD ["python", "producer.py"]
+CMD ["python", "/app/producer.py"]

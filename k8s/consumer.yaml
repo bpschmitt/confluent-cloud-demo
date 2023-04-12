@@ -15,6 +15,7 @@ spec:
       containers:
         - name: nr-confluent-consumer
           image: bpschmitt/python-consumer:latest
+          imagePullPolicy: Always
           env:
             - name: CONFLUENT_BOOTSTRAP_SERVER
               valueFrom:
