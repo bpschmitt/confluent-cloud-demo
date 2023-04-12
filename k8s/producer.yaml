@@ -16,8 +16,6 @@ spec:
         - name: nr-confluent-producer
           image: bpschmitt/python-producer:latest
           imagePullPolicy: Always
-          args:
-            - producer.py
           env:
             - name: CONFLUENT_BOOTSTRAP_SERVER
               valueFrom:

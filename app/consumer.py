@@ -1,19 +1,21 @@
 from confluent_kafka import Consumer, KafkaError
-import time
-import os
+import os, logging, sys
 
 bootstrap_server = os.getenv('CONFLUENT_BOOTSTRAP_SERVER')
 confluent_api_key = os.getenv('CONFLUENT_API_KEY')
 confluent_secret_key = os.getenv('CONFLUENT_SECRET_KEY')
 
-def delivery_report(err, msg):
-    """Callback function to be called on delivery of message"""
-    if err is not None:
-        print('Message delivery failed: {}'.format(err))
-    else:
-        print('Message delivered to {} [{}]'.format(msg.topic(), msg.partition()))
+log = logging.getLogger()
+log.setLevel(logging.INFO)
+
+handler = logging.StreamHandler(sys.stdout)
+handler.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+log.addHandler(handler)
 
 def main():
+
     consumer_conf = {
     'bootstrap.servers': bootstrap_server,
     'sasl.mechanisms': 'PLAIN',
@@ -24,7 +26,7 @@ def main():
 }
 
     consumer = Consumer(consumer_conf)
-    print('Consumer firing up!!')
+    log.info('Consumer firing up!!')
 
    # Example of consuming messages from a topic
     consumer.subscribe(['demo'])
@@ -36,11 +38,11 @@ def main():
             continue
         if msg.error():
             if msg.error().code() == KafkaError._PARTITION_EOF:
-                print('End of partition event detected')
+                log.info('End of partition event detected')
             else:
-                print('Error while consuming messages: {}'.format(msg.error()))
+                log.error('Error while consuming messages: {}'.format(msg.error()))
         else:
-            print('Received message: key={}, value={}, partition={}, offset={}'.format(
+            log.info('Received message: key={}, value={}, partition={}, offset={}'.format(
                 msg.key(), msg.value(), msg.partition(), msg.offset()))
         
 if __name__ == '__main__':
