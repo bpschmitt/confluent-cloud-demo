@@ -24,6 +24,7 @@ def main():
 }
 
     consumer = Consumer(consumer_conf)
+    print('Consumer firing up!!')
 
    # Example of consuming messages from a topic
     consumer.subscribe(['demo'])

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nr-confluent-producer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nr-confluent-producer
+  template:
+    metadata:
+      labels:
+        app: nr-confluent-producer
+    spec:
+      containers:
+        - name: nr-confluent-producer
+          image: bpschmitt/python-producer:latest
+          args:
+            - producer.py
+          env:
+            - name: CONFLUENT_BOOTSTRAP_SERVER
+              valueFrom:
+                secretKeyRef:
+                  name: nr-confluent-secrets
+                  key: bootstrap-server
+            - name: CONFLUENT_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: nr-confluent-secrets
+                  key: api-key
+            - name: CONFLUENT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: nr-confluent-secrets
+                  key: secret-key

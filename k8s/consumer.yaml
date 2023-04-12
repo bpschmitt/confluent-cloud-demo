@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nr-confluent-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nr-confluent-consumer
+  template:
+    metadata:
+      labels:
+        app: nr-confluent-consumer
+    spec:
+      containers:
+        - name: nr-confluent-consumer
+          image: bpschmitt/python-consumer:latest
+          env:
+            - name: CONFLUENT_BOOTSTRAP_SERVER
+              valueFrom:
+                secretKeyRef:
+                  name: nr-confluent-secrets
+                  key: bootstrap-server
+            - name: CONFLUENT_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: nr-confluent-secrets
+                  key: api-key
+            - name: CONFLUENT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: nr-confluent-secrets
+                  key: secret-key

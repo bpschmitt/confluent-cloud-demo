@@ -1,5 +1,6 @@
 from confluent_kafka import Producer, Consumer
-import time, os, lorem
+import time, os
+import lorem
 
 bootstrap_server = os.getenv('CONFLUENT_BOOTSTRAP_SERVER')
 confluent_api_key = os.getenv('CONFLUENT_API_KEY')
@@ -22,6 +23,7 @@ def main():
 }
 
     producer = Producer(producer_conf)
+    print('Producer firing up!!')
 
     while True:
         message = lorem.sentence() 
