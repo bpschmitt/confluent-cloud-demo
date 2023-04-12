@@ -4,6 +4,7 @@ import os, logging, sys
 bootstrap_server = os.getenv('CONFLUENT_BOOTSTRAP_SERVER')
 confluent_api_key = os.getenv('CONFLUENT_API_KEY')
 confluent_secret_key = os.getenv('CONFLUENT_SECRET_KEY')
+confluent_topic_name = os.getenv('CONFLUENT_TOPIC_NAME')
 
 log = logging.getLogger()
 log.setLevel(logging.INFO)
@@ -29,7 +30,7 @@ def main():
     log.info('Consumer firing up!!')
 
    # Example of consuming messages from a topic
-    consumer.subscribe(['demo'])
+    consumer.subscribe([confluent_topic_name])
 
     while True:
         msg = consumer.poll(1.0)

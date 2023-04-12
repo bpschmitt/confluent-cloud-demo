@@ -17,6 +17,8 @@ spec:
           image: bpschmitt/python-consumer:latest
           imagePullPolicy: Always
           env:
+            - name: CONFLUENT_TOPIC_NAME
+              value: 'demo'
             - name: CONFLUENT_BOOTSTRAP_SERVER
               valueFrom:
                 secretKeyRef:

@@ -4,6 +4,7 @@ import os, logging, sys, time, lorem
 bootstrap_server = os.getenv('CONFLUENT_BOOTSTRAP_SERVER')
 confluent_api_key = os.getenv('CONFLUENT_API_KEY')
 confluent_secret_key = os.getenv('CONFLUENT_SECRET_KEY')
+confluent_topic_name = os.getenv('CONFLUENT_TOPIC_NAME')
 
 log = logging.getLogger()
 log.setLevel(logging.INFO)
@@ -36,7 +37,7 @@ def main():
 
     while True:
         message = lorem.sentence() 
-        producer.produce('demo', value=message, callback=delivery_report)
+        producer.produce(confluent_topic_name, value=message, callback=delivery_report)
         producer.flush()
         log.info('Produced message: {}'.format(message))
         time.sleep(1)
