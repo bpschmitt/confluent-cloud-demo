@@ -40,12 +40,3 @@ jobs:
         file: ./app/producer_Dockerfile
         push: true
         tags: bpschmitt/python-producer:latest
-
-
-    - name: Update Minor version
-      uses: hmanzur/actions-set-secret@v2.0.0
-      with:
-        name: 'MINOR'
-        value: $((${{ secrets.MINOR }}+1))
-        repository: bpschmitt/confluent-cloud-demo
-        token: ${{ secrets.REPO_ACCESS_TOKEN }}
